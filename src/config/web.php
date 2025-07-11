@@ -42,14 +42,22 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
+                // тут можно добавить свои правила маршрутизации
+                // '<action:(about|contact|login|logout|signup|db-test)>' => 'site/<action>',
+                'about' => 'site/about',
+                'contact' => 'site/contact',
+                'login' => 'site/login',
+                'logout' => 'site/logout',
+                'signup' => 'site/signup',
+                'db-test' => 'site/db-test',
+                '' => 'site/index',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

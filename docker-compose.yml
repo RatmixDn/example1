@@ -26,9 +26,9 @@ services:
     image: postgres:15
     container_name: yii2-postgres
     environment:
-      POSTGRES_DB: yii2app
-      POSTGRES_USER: yii2user
-      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: projectapp
+      POSTGRES_USER: projectuser
+      POSTGRES_PASSWORD: dfg3r4343dsd3Gd
     ports:
       - "5432:5432"
     volumes:

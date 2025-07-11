@@ -38,6 +38,26 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if ($action->id !== 'error' && isset($_GET['r'])) {
+            throw new \yii\web\NotFoundHttpException('Page not found.');
+        }
+
+        $path = Yii::$app->request->pathInfo;
+
+        if (
+            $action->id !== 'error' &&
+            $action->id !== 'captcha' &&
+            strpos($path, 'site/') === 0
+        ) {
+            $newUrl = substr($path, strlen('site/'));
+            return Yii::$app->response->redirect('/' . $newUrl, 301)->send();
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * {@inheritdoc}
      */
