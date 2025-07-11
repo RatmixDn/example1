@@ -1,0 +1,33 @@
+# Игнорируем папки с зависимостями и временные файлы Yii2
+/vendor/
+/runtime/
+/web/assets/
+
+# Локальные файлы среды
+.env
+.env.local
+.env.*.local
+
+# Логи
+*.log
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
+
+# Docker: не игнорируем файлы конфигурации, игнорируем данные контейнеров и кэш
+pgdata/
+pgadmin-data/
+
+# Node (если вдруг есть)
+/node_modules/
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Файлы с ключами и сертификатами
+*.key
+*.crt
