@@ -40,11 +40,18 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
+        // Отключаем Bootstrap, jQuery, yii.js для всех действий контроллера
+        \Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = false;
+        \Yii::$app->assetManager->bundles['yii\bootstrap\BootstrapAsset'] = false;
+        \Yii::$app->assetManager->bundles['yii\bootstrap5\BootstrapAsset'] = false;
+        \Yii::$app->assetManager->bundles['yii\bootstrap5\BootstrapPluginAsset'] = false;
+        \Yii::$app->assetManager->bundles['yii\web\YiiAsset'] = false; // отключаем yii.js и css-файлы yii
+
         if ($action->id !== 'error' && isset($_GET['r'])) {
             throw new \yii\web\NotFoundHttpException('Page not found.');
         }
 
-        $path = Yii::$app->request->pathInfo;
+        $path = \Yii::$app->request->pathInfo;
 
         if (
             $action->id !== 'error' &&
@@ -52,7 +59,7 @@ class SiteController extends Controller
             strpos($path, 'site/') === 0
         ) {
             $newUrl = substr($path, strlen('site/'));
-            return Yii::$app->response->redirect('/' . $newUrl, 301)->send();
+            return \Yii::$app->response->redirect('/' . $newUrl, 301)->send();
         }
 
         return parent::beforeAction($action);

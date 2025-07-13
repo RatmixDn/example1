@@ -12,11 +12,31 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'redis' => [
+            'class' => \yii\redis\Connection::class,
+            'hostname' => 'redis',
+            'port' => 6379,
+            'database' => 0,
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'redis' => 'redis', // имя компонента redis
+            'channel' => 'queue', // название канала
+            'as log' => \yii\queue\LogBehavior::class,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'nRgEccmoBfD0hlwNio3PX5jeu-NzfWej',
         ],
         'cache' => [
+            'class' => 'yii\redis\Cache',
+            'redis' => [
+                'hostname' => 'redis',
+                'port' => 6379,
+                'database' => 1,
+            ],
+        ],
+        'fileCache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [

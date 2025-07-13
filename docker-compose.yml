@@ -10,6 +10,20 @@ services:
       - ./src:/var/www/html
     depends_on:
       - postgres
+      - redis
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yii2-queue
+    volumes:
+      - ./src:/var/www/html
+    command: php yii queue/listen --verbose --color
+    depends_on:
+      - php
+      - redis
+    restart: unless-stopped
 
   nginx:
     image: nginx:latest
@@ -23,12 +37,12 @@ services:
       - php
 
   postgres:
-    image: postgres:15
+    image: postgis/postgis:15-3.4
     container_name: yii2-postgres
     environment:
-      POSTGRES_DB: projectapp
-      POSTGRES_USER: projectuser
-      POSTGRES_PASSWORD: dfg3r4343dsd3Gd
+      POSTGRES_DB: mpdb
+      POSTGRES_USER: mpuser
+      POSTGRES_PASSWORD: mppassword
     ports:
       - "5432:5432"
     volumes:
@@ -47,6 +61,15 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
+  redis:
+    image: redis:7
+    container_name: yii2-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
 volumes:
   pgdata:
   pgadmin-data:
+  redis-data:
